@@ -66,8 +66,16 @@
     <Compile Include="Assets\Wa.cs" />
     <Compile Include="Assets\Tower.cs" />
     <Compile Include="Assets\EnemySpawner.cs" />
+    <Compile Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\PointLight.cs" />
+    <Compile Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\Move.cs" />
     <Compile Include="Assets\Bullet.cs" />
     <Compile Include="Assets\SlowBullet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Orkassasin\Material\Standard_Two_Sided .shader" />
+    <None Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\READ ME FIRST!!!\character setup guide link.txt" />
+    <None Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\READ ME FIRST!!!\read me.txt" />
+    <None Include="Assets\Ork berserker\materials\Standard_Two_Sided .shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

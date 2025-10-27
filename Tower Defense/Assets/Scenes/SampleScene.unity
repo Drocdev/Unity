@@ -2452,7 +2452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 996680941134484628, guid: 56fea27d75e29e449a1af34261e2158e, type: 3}
-  timeBetweenSpawns: 5
+  timeBetweenSpawns: 2
 --- !u!114 &2037886604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,6 +2519,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Castle
       objectReference: {fileID: 0}
+    - target: {fileID: 8647512852048277261, guid: 977380f6120d5e7419b41dad03a1a08f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2535,6 +2539,10 @@ PrefabInstance:
     - target: {fileID: 291171788836604092, guid: cf9a5660d4845d0418b924a039ece9e8, type: 3}
       propertyPath: m_Name
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 291171788836604092, guid: cf9a5660d4845d0418b924a039ece9e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1253264741080452948, guid: cf9a5660d4845d0418b924a039ece9e8, type: 3}
       propertyPath: m_Enabled
@@ -2709,6 +2717,10 @@ PrefabInstance:
     - target: {fileID: 2095972352546469168, guid: 71a656edaed21b74093810a30e7186f5, type: 3}
       propertyPath: m_Name
       value: Tower2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2095972352546469168, guid: 71a656edaed21b74093810a30e7186f5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3239090043211688888, guid: 71a656edaed21b74093810a30e7186f5, type: 3}
       propertyPath: range

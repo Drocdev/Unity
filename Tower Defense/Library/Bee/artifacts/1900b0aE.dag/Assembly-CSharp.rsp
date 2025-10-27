@@ -356,6 +356,8 @@
 "Assets/CameraController.cs"
 "Assets/Enemy.cs"
 "Assets/EnemySpawner.cs"
+"Assets/LowPoly Fantasy Monsters Pack Ver1.0_Demo/Environment/Scripts/Move.cs"
+"Assets/LowPoly Fantasy Monsters Pack Ver1.0_Demo/Environment/Scripts/PointLight.cs"
 "Assets/SlowBullet.cs"
 "Assets/Tower.cs"
 "Assets/Wa.cs"

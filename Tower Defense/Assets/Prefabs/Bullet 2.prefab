@@ -124,7 +124,7 @@ MonoBehaviour:
   impactEffect: {fileID: 0}
   applyPoison: 1
   poisonDamagePerSecond: 2
-  poisonDuration: 3
+  poisonDuration: 5
   applySlow: 1
   slowAmount: 0.5
-  slowDuration: 2
+  slowDuration: 5

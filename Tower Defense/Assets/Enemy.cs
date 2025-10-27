@@ -18,8 +18,8 @@ public class Enemy : MonoBehaviour
     private bool isSlowed = false;
 
     [Header("Visuals")]
-    private Renderer rend;
-    private Color originalColor;
+    private Renderer[] renderers;
+    private Color[] originalColors;
 
     // Optional: particle system for poison
     public ParticleSystem poisonEffect;
@@ -29,10 +29,17 @@ public class Enemy : MonoBehaviour
         startSpeed = speed;
         target = Waypoints.points[0];
 
-        rend = GetComponent<Renderer>();
-        if (rend != null)
+        // Get all renderers in the prefab (including children)
+        renderers = GetComponentsInChildren<Renderer>();
+
+        // Save original colors for all renderers
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
         {
-            originalColor = rend.material.color;
+            if (renderers[i].material.HasProperty("_BaseColor"))
+                originalColors[i] = renderers[i].material.GetColor("_BaseColor");
+            else
+                originalColors[i] = renderers[i].material.color;
         }
     }
 
@@ -40,9 +47,18 @@ public class Enemy : MonoBehaviour
     {
         if (target == null) return;
 
-        // Move toward current waypoint
+        // Direction to next waypoint
         Vector3 dir = target.position - transform.position;
+
+        // Move toward current waypoint
         transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
+
+        // Rotate smoothly toward direction
+        if (dir != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f * Time.deltaTime);
+        }
 
         // Check if reached waypoint
         if (Vector3.Distance(transform.position, target.position) < 0.2f)
@@ -107,10 +123,13 @@ public class Enemy : MonoBehaviour
     {
         isPoisoned = true;
 
-        // Change color to purple
-        if (rend != null)
+        // Change all renderers to purple
+        foreach (Renderer r in renderers)
         {
-            rend.material.color = new Color(0.5f, 0f, 0.5f); // RGB purple
+            if (r.material.HasProperty("_BaseColor"))
+                r.material.SetColor("_BaseColor", new Color(0.5f, 0f, 0.5f));
+            else
+                r.material.color = new Color(0.5f, 0f, 0.5f);
         }
 
         // Play poison particle if assigned
@@ -124,8 +143,14 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
 
-        // Reset color
-        if (rend != null) rend.material.color = originalColor;
+        // Reset all renderers to original colors
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i].material.HasProperty("_BaseColor"))
+                renderers[i].material.SetColor("_BaseColor", originalColors[i]);
+            else
+                renderers[i].material.color = originalColors[i];
+        }
 
         // Stop particle
         if (poisonEffect != null) poisonEffect.Stop();
