@@ -119,4 +119,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 60
-  damage: 5
+  damage: 1
+  explosionRadius: 0
+  impactEffect: {fileID: 0}
+  applyPoison: 1
+  poisonDamagePerSecond: 2
+  poisonDuration: 3
+  applySlow: 1
+  slowAmount: 0.5
+  slowDuration: 2

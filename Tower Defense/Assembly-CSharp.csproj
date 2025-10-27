@@ -67,6 +67,7 @@
     <Compile Include="Assets\Tower.cs" />
     <Compile Include="Assets\EnemySpawner.cs" />
     <Compile Include="Assets\Bullet.cs" />
+    <Compile Include="Assets\SlowBullet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

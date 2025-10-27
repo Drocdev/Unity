@@ -356,6 +356,7 @@
 "Assets/CameraController.cs"
 "Assets/Enemy.cs"
 "Assets/EnemySpawner.cs"
+"Assets/SlowBullet.cs"
 "Assets/Tower.cs"
 "Assets/Wa.cs"
 "Assets/Waypoints.cs"
