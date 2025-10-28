@@ -1,29 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Dan\\Downloads\\Tower Defense\\",
+  "WorkspaceRootPath": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|c:\\users\\dan\\downloads\\tower defense\\assets\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Dan\\Downloads\\Tower Defense\\assets\\tower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\tower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Dan\\Downloads\\Tower Defense\\assets\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\assets\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Dan\\Downloads\\Tower Defense\\assets\\slowbullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|c:\\users\\gebruiker\\desktop\\tower defense\\assets\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\assets\\tower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\tower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\assets\\slowbullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\slowbullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Dan\\Downloads\\Tower Defense\\assets\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\assets\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Dan\\Downloads\\Tower Defense\\assets\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\assets\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{689D9C60-2577-4B28-C05E-EFF5B7059F6B}|Assembly-CSharp.csproj|solutionrelative:assets\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -34,15 +34,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Tower.cs",
-              "DocumentMoniker": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\Tower.cs",
+              "DocumentMoniker": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\Tower.cs",
               "RelativeDocumentMoniker": "Assets\\Tower.cs",
-              "ToolTip": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\Tower.cs",
+              "ToolTip": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\Tower.cs",
               "RelativeToolTip": "Assets\\Tower.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAAwDkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -52,9 +52,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "SlowBullet.cs",
-              "DocumentMoniker": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\SlowBullet.cs",
+              "DocumentMoniker": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\SlowBullet.cs",
               "RelativeDocumentMoniker": "Assets\\SlowBullet.cs",
-              "ToolTip": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\SlowBullet.cs",
+              "ToolTip": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\SlowBullet.cs",
               "RelativeToolTip": "Assets\\SlowBullet.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -62,25 +62,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Bullet.cs",
-              "DocumentMoniker": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\Bullet.cs",
+              "DocumentMoniker": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\Bullet.cs",
               "RelativeDocumentMoniker": "Assets\\Bullet.cs",
-              "ToolTip": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\Bullet.cs",
+              "ToolTip": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\Bullet.cs",
               "RelativeToolTip": "Assets\\Bullet.cs",
-              "ViewState": "AgIAAGwAAAAAAAAAAAAAwH8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAuwH8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T08:43:48.933Z"
+              "WhenOpened": "2025-10-16T08:43:48.933Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Enemy.cs",
-              "DocumentMoniker": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\Enemy.cs",
+              "DocumentMoniker": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\Enemy.cs",
               "RelativeDocumentMoniker": "Assets\\Enemy.cs",
-              "ToolTip": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\Enemy.cs",
+              "ToolTip": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\Enemy.cs",
               "RelativeToolTip": "Assets\\Enemy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAQwKAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T08:16:35.357Z",
               "EditorCaption": ""
@@ -89,9 +90,9 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "EnemySpawner.cs",
-              "DocumentMoniker": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\EnemySpawner.cs",
+              "DocumentMoniker": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\EnemySpawner.cs",
               "RelativeDocumentMoniker": "Assets\\EnemySpawner.cs",
-              "ToolTip": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\EnemySpawner.cs",
+              "ToolTip": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\EnemySpawner.cs",
               "RelativeToolTip": "Assets\\EnemySpawner.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -101,9 +102,9 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "CameraController.cs",
-              "DocumentMoniker": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\CameraController.cs",
+              "DocumentMoniker": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\CameraController.cs",
               "RelativeDocumentMoniker": "Assets\\CameraController.cs",
-              "ToolTip": "C:\\Users\\Dan\\Downloads\\Tower Defense\\Assets\\CameraController.cs",
+              "ToolTip": "C:\\Users\\Gebruiker\\Desktop\\Tower Defense\\Assets\\CameraController.cs",
               "RelativeToolTip": "Assets\\CameraController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
