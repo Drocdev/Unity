@@ -72,6 +72,7 @@
     <Compile Include="Assets\SlowBullet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Balista\Shader\Matte Shadow Mask.shader" />
     <None Include="Assets\Orkassasin\Material\Standard_Two_Sided .shader" />
     <None Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\READ ME FIRST!!!\character setup guide link.txt" />
     <None Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\READ ME FIRST!!!\read me.txt" />
