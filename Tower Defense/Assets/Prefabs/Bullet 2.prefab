@@ -123,8 +123,12 @@ MonoBehaviour:
   explosionRadius: 0
   impactEffect: {fileID: 0}
   applyPoison: 1
-  poisonDamagePerSecond: 2
-  poisonDuration: 5
+  poisonDamagePerSecond: 5
+  poisonDuration: 10
   applySlow: 1
   slowAmount: 0.5
   slowDuration: 5
+  canPierce: 0
+  maxPierceCount: 3
+  homingRange: 0
+  damageNumberPrefab: {fileID: 2272204125733258317, guid: f4b0019560a362f4cb664ec22b6053bc, type: 3}

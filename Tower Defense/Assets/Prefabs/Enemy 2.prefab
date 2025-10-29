@@ -123,8 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  health: 50
+  health: 500
   poisonEffect: {fileID: 2305960836045040262}
+  damageNumberPrefab: {fileID: 2272204125733258317, guid: f4b0019560a362f4cb664ec22b6053bc, type: 3}
+  normalDamageOffset: {x: 0, y: 30, z: 0}
+  poisonDamageOffset: {x: 0, y: 35, z: 0}
 --- !u!1001 &8467916955161146930
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -21,25 +21,30 @@ public class Enemy : MonoBehaviour
     private Renderer[] renderers;
     private Color[] originalColors;
 
-    // Optional: particle system for poison
     public ParticleSystem poisonEffect;
+
+    [Header("Damage Numbers")]
+    public GameObject damageNumberPrefab;
+
+    [Header("Damage Number Offsets")]
+    public Vector3 normalDamageOffset = new Vector3(-0.2f, 3f, 0);
+    public Vector3 poisonDamageOffset = new Vector3(0.2f, 3f, 0);
+
+    // Reference to current stacked normal damage number
+    private DamageNumber activeWhiteNumber;
+    private int accumulatedNormalDamage = 0;
 
     void Start()
     {
         startSpeed = speed;
         target = Waypoints.points[0];
 
-        // Get all renderers in the prefab (including children)
         renderers = GetComponentsInChildren<Renderer>();
-
-        // Save original colors for all renderers
         originalColors = new Color[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (renderers[i].material.HasProperty("_BaseColor"))
-                originalColors[i] = renderers[i].material.GetColor("_BaseColor");
-            else
-                originalColors[i] = renderers[i].material.color;
+            originalColors[i] = renderers[i].material.HasProperty("_BaseColor") ?
+                renderers[i].material.GetColor("_BaseColor") : renderers[i].material.color;
         }
     }
 
@@ -47,20 +52,15 @@ public class Enemy : MonoBehaviour
     {
         if (target == null) return;
 
-        // Direction to next waypoint
         Vector3 dir = target.position - transform.position;
-
-        // Move toward current waypoint
         transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
 
-        // Rotate smoothly toward direction
         if (dir != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f * Time.deltaTime);
         }
 
-        // Check if reached waypoint
         if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
             GetNextWaypoint();
@@ -72,19 +72,48 @@ public class Enemy : MonoBehaviour
         waypointIndex++;
         if (waypointIndex >= Waypoints.points.Length)
         {
-            Destroy(gameObject); // Reached end
+            Destroy(gameObject);
             return;
         }
         target = Waypoints.points[waypointIndex];
     }
 
-    public void TakeDamage(int dmg)
+    // ------------ DAMAGE ------------
+
+    public void TakeDamage(int dmg, Color? dmgColor = null)
     {
         health -= dmg;
-        if (health <= 0)
+        bool isPoisonDamage = dmgColor == new Color(0.5f, 0f, 0.5f);
+
+        if (damageNumberPrefab != null && dmg > 0)
         {
-            Die();
+            if (!isPoisonDamage)
+            {
+                // --- Handle stacked white number ---
+                if (activeWhiteNumber == null)
+                {
+                    GameObject dmgText = Instantiate(damageNumberPrefab);
+                    activeWhiteNumber = dmgText.GetComponent<DamageNumber>();
+                    accumulatedNormalDamage = dmg;
+                    activeWhiteNumber.Setup(accumulatedNormalDamage, transform, Color.white, normalDamageOffset);
+                }
+                else
+                {
+                    accumulatedNormalDamage += dmg;
+                    activeWhiteNumber.UpdateDamage(accumulatedNormalDamage);
+                    activeWhiteNumber.ResetFadeTimer(); // prevent it from fading out too early
+                }
+            }
+            else
+            {
+                // --- Spawn separate purple poison number ---
+                GameObject dmgText = Instantiate(damageNumberPrefab);
+                var dn = dmgText.GetComponent<DamageNumber>();
+                dn.Setup(dmg, transform, new Color(0.5f, 0f, 0.5f), poisonDamageOffset);
+            }
         }
+
+        if (health <= 0) Die();
     }
 
     void Die()
@@ -92,7 +121,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // ---------------- Status Effects ----------------
+    // ------------ STATUS EFFECTS ------------
 
     public void ApplySlow(float slowFactor, float duration)
     {
@@ -104,9 +133,7 @@ public class Enemy : MonoBehaviour
     {
         isSlowed = true;
         speed = startSpeed * slowFactor;
-
         yield return new WaitForSeconds(duration);
-
         speed = startSpeed;
         isSlowed = false;
     }
@@ -123,7 +150,6 @@ public class Enemy : MonoBehaviour
     {
         isPoisoned = true;
 
-        // Change all renderers to purple
         foreach (Renderer r in renderers)
         {
             if (r.material.HasProperty("_BaseColor"))
@@ -132,18 +158,20 @@ public class Enemy : MonoBehaviour
                 r.material.color = new Color(0.5f, 0f, 0.5f);
         }
 
-        // Play poison particle if assigned
         if (poisonEffect != null) poisonEffect.Play();
 
         float elapsed = 0f;
+        float tickInterval = 1f;
         while (elapsed < duration)
         {
-            TakeDamage(Mathf.RoundToInt(dps * Time.deltaTime));
-            elapsed += Time.deltaTime;
-            yield return null;
+            yield return new WaitForSeconds(tickInterval);
+
+            int tickDamage = Mathf.RoundToInt(dps * tickInterval);
+            TakeDamage(tickDamage, new Color(0.5f, 0f, 0.5f));
+
+            elapsed += tickInterval;
         }
 
-        // Reset all renderers to original colors
         for (int i = 0; i < renderers.Length; i++)
         {
             if (renderers[i].material.HasProperty("_BaseColor"))
@@ -152,9 +180,9 @@ public class Enemy : MonoBehaviour
                 renderers[i].material.color = originalColors[i];
         }
 
-        // Stop particle
         if (poisonEffect != null) poisonEffect.Stop();
-
         isPoisoned = false;
+
+        if (health <= 0) Die();
     }
 }

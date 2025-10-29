@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class Bullet : MonoBehaviour
     public int damage = 1;
 
     [Header("Splash Damage")]
-    public float explosionRadius = 0f; // 0 = no splash damage
-    public GameObject impactEffect;    // optional visual effect
+    public float explosionRadius = 0f;
+    public GameObject impactEffect;
 
     [Header("Effects")]
     public bool applyPoison = false;
@@ -19,11 +20,16 @@ public class Bullet : MonoBehaviour
     public float poisonDuration = 3f;
 
     public bool applySlow = false;
-    [Range(0f, 1f)]
-    public float slowAmount = 0.5f; // 50% speed
+    [Range(0f, 1f)] public float slowAmount = 0.5f;
     public float slowDuration = 2f;
 
-    // --- Targeting ---
+    [Header("Piercing Option")]
+    public bool canPierce = false;
+    public int maxPierceCount = 3;
+    public float homingRange = 15f;
+    private int piercedCount = 0;
+    private HashSet<Enemy> hitEnemies = new HashSet<Enemy>();
+
     public void Seek(Transform _target)
     {
         target = _target;
@@ -33,44 +39,79 @@ public class Bullet : MonoBehaviour
     {
         if (target == null)
         {
-            Destroy(gameObject);
-            return;
+            if (canPierce) FindNextTarget();
+            else { Destroy(gameObject); return; }
         }
 
-        Vector3 dir = target.position - transform.position;
-        float distanceThisFrame = speed * Time.deltaTime;
+        Vector3 moveDir = (target != null) ? (target.position - transform.position).normalized : transform.forward;
+        transform.position += moveDir * speed * Time.deltaTime;
 
-        if (dir.magnitude <= distanceThisFrame)
+        if (target != null)
         {
-            HitTarget();
-            return;
+            Quaternion lookRotation = Quaternion.LookRotation(target.position - transform.position);
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 20f);
         }
 
-        // Smooth rotation toward target
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 20f);
-
-        // Move toward target
-        transform.position += dir.normalized * distanceThisFrame;
-    }
-
-    void HitTarget()
-    {
-        // Spawn impact effect
-        if (impactEffect != null)
+        if (canPierce)
         {
-            Instantiate(impactEffect, transform.position, transform.rotation);
-        }
+            Collider[] hits = Physics.OverlapSphere(transform.position, 0.5f);
+            foreach (Collider col in hits)
+            {
+                Enemy e = col.GetComponent<Enemy>();
+                if (e != null && !hitEnemies.Contains(e))
+                {
+                    ApplyAllEffects(e);
+                    hitEnemies.Add(e);
+                    piercedCount++;
 
-        // Damage logic
-        if (explosionRadius > 0f)
-        {
-            Explode();
+                    if (piercedCount >= maxPierceCount)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+                    FindNextTarget();
+                }
+            }
         }
         else
         {
-            Damage(target);
+            if (target != null && Vector3.Distance(transform.position, target.position) <= speed * Time.deltaTime)
+            {
+                HitTarget(target.GetComponent<Enemy>());
+            }
         }
+    }
+
+    void FindNextTarget()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, homingRange);
+        Enemy closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (Collider col in hits)
+        {
+            Enemy e = col.GetComponent<Enemy>();
+            if (e != null && !hitEnemies.Contains(e))
+            {
+                float dist = Vector3.Distance(transform.position, e.transform.position);
+                if (dist < minDistance)
+                {
+                    minDistance = dist;
+                    closest = e;
+                }
+            }
+        }
+
+        target = (closest != null) ? closest.transform : null;
+    }
+
+    void HitTarget(Enemy e)
+    {
+        if (e == null) return;
+        if (impactEffect != null) Instantiate(impactEffect, transform.position, transform.rotation);
+
+        if (explosionRadius > 0f) Explode();
+        else ApplyAllEffects(e);
 
         Destroy(gameObject);
     }
@@ -81,47 +122,31 @@ public class Bullet : MonoBehaviour
         foreach (Collider col in colliders)
         {
             Enemy e = col.GetComponent<Enemy>();
-            if (e != null)
-            {
-                ApplyEffects(e);
-            }
+            if (e != null) ApplyAllEffects(e);
         }
     }
 
-    void Damage(Transform enemy)
+    void ApplyAllEffects(Enemy e)
     {
-        Enemy e = enemy.GetComponent<Enemy>();
-        if (e != null)
-        {
-            ApplyEffects(e);
-        }
-    }
-
-    void ApplyEffects(Enemy e)
-    {
-        // Base damage
+        // Only call TakeDamage; Enemy handles spawning numbers
         e.TakeDamage(damage);
 
-        // Poison effect
-        if (applyPoison)
-        {
-            e.ApplyPoison(poisonDamagePerSecond, poisonDuration);
-        }
-
-        // Slow effect
-        if (applySlow)
-        {
-            e.ApplySlow(slowAmount, slowDuration);
-        }
+        if (applyPoison) e.ApplyPoison(poisonDamagePerSecond, poisonDuration);
+        if (applySlow) e.ApplySlow(slowAmount, slowDuration);
     }
 
-    // Visualize splash radius in editor
     void OnDrawGizmosSelected()
     {
         if (explosionRadius > 0f)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        }
+
+        if (canPierce)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, homingRange);
         }
     }
 }

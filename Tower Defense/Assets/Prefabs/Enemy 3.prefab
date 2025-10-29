@@ -122,3 +122,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   health: 50
+  poisonEffect: {fileID: 0}
+  damageNumberPrefab: {fileID: 4909121763147052843, guid: 9fdef4ccfdb91e349a1e09bfa4c28a59, type: 3}

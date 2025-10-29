@@ -118,7 +118,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b52b230647c9d4685cf0f030d2fb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  damage: 10
-  explosionRadius: 10
+  speed: 80
+  damage: 5
+  explosionRadius: 35
   impactEffect: {fileID: 4489615568826846175, guid: 2c0d276d1c1d0494e9afd736cab81d72, type: 3}
+  applyPoison: 0
+  poisonDamagePerSecond: 2
+  poisonDuration: 3
+  applySlow: 0
+  slowAmount: 0.5
+  slowDuration: 2
+  canPierce: 0
+  maxPierceCount: 3
+  homingRange: 0
+  damageNumberPrefab: {fileID: 2272204125733258317, guid: f4b0019560a362f4cb664ec22b6053bc, type: 3}
