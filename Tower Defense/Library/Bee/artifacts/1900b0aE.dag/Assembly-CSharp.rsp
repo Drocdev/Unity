@@ -357,6 +357,7 @@
 "Assets/DamageNumber.cs"
 "Assets/Enemy.cs"
 "Assets/EnemySpawner.cs"
+"Assets/GameManager.cs"
 "Assets/LowPoly Fantasy Monsters Pack Ver1.0_Demo/Environment/Scripts/Move.cs"
 "Assets/LowPoly Fantasy Monsters Pack Ver1.0_Demo/Environment/Scripts/PointLight.cs"
 "Assets/SlowBullet.cs"
@@ -395,6 +396,7 @@
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
 "Assets/Tower.cs"
+"Assets/TowerPlacer.cs"
 "Assets/Wa.cs"
 "Assets/Waypoints.cs"
 -langversion:9.0

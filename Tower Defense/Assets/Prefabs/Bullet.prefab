@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 80
-  damage: 5
+  damage: 10
   explosionRadius: 35
   impactEffect: {fileID: 4489615568826846175, guid: 2c0d276d1c1d0494e9afd736cab81d72, type: 3}
   applyPoison: 0
@@ -131,4 +131,3 @@ MonoBehaviour:
   canPierce: 0
   maxPierceCount: 3
   homingRange: 0
-  damageNumberPrefab: {fileID: 2272204125733258317, guid: f4b0019560a362f4cb664ec22b6053bc, type: 3}
