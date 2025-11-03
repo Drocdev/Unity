@@ -7,29 +7,31 @@ public class GameManager : MonoBehaviour
     public Camera mainCamera;
 
     [Header("Towers")]
-    public List<GameObject> towerPrefabs; // assign tower prefabs here
+    public List<GameObject> towerPrefabs;
 
     [Header("Tower Offsets")]
-    public List<Vector3> towerOffsets; // assign offset per tower prefab
+    public List<Vector3> towerOffsets;
 
     [Header("Placement")]
     public LayerMask placementMask;
-    public float towerRotation = 0f; // default rotation offset for ghosts
+    public float towerRotation = 0f;
 
     [Header("Currency")]
     public int gold = 100;
 
     [Header("Tower Costs")]
-    public List<int> towerCosts; // match index with towerPrefabs
+    public List<int> towerCosts;
 
     private GameObject ghostObject;
     private int selectedTowerIndex = 0;
-    private bool ghostActive = false; // tracks whether ghost is visible
+    private bool ghostActive = false;
+    private Tower selectedTower = null;
 
     void Update()
     {
         HandleTowerSelection();
         HandleTowerPlacement();
+        HandleTowerClick();
     }
 
     void HandleTowerSelection()
@@ -43,7 +45,6 @@ public class GameManager : MonoBehaviour
     {
         if (index < 0 || index >= towerPrefabs.Count) return;
 
-        // If ghost is active and same tower key is pressed, hide ghost
         if (ghostActive && selectedTowerIndex == index)
         {
             Destroy(ghostObject);
@@ -52,7 +53,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Otherwise, select new tower and show ghost
         selectedTowerIndex = index;
 
         if (ghostObject != null)
@@ -61,21 +61,22 @@ public class GameManager : MonoBehaviour
         ghostObject = Instantiate(towerPrefabs[selectedTowerIndex]);
         ghostObject.name = towerPrefabs[selectedTowerIndex].name + "_Ghost";
 
-        // Apply prefab's original rotation plus towerRotation
         Quaternion rotationOffset = Quaternion.Euler(0, towerRotation, 0);
         ghostObject.transform.rotation = towerPrefabs[selectedTowerIndex].transform.rotation * rotationOffset;
 
-        // Disable all scripts and colliders
         MonoBehaviour[] scripts = ghostObject.GetComponentsInChildren<MonoBehaviour>(true);
         foreach (var s in scripts) s.enabled = false;
 
         Collider[] colliders = ghostObject.GetComponentsInChildren<Collider>(true);
         foreach (var c in colliders) c.enabled = false;
 
-        // Apply transparent ghost
         ApplyGhostTransparency(ghostObject);
 
-        ghostActive = true; // ghost is now active
+        Tower towerComp = ghostObject.GetComponent<Tower>();
+        if (towerComp != null)
+            towerComp.ShowRange(true);
+
+        ghostActive = true;
     }
 
     void HandleTowerPlacement()
@@ -105,18 +106,53 @@ public class GameManager : MonoBehaviour
 
         Vector3 currentOffset = towerOffsets[selectedTowerIndex];
 
-        // Use ghost's rotation to match preview
-        Instantiate(
+        GameObject placedTower = Instantiate(
             towerPrefabs[selectedTowerIndex],
             position + currentOffset,
             ghostObject.transform.rotation
         );
+
+        Tower towerComp = placedTower.GetComponent<Tower>();
+        if (towerComp != null)
+            towerComp.ShowRange(false);
+    }
+
+    void HandleTowerClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Tower clickedTower = hit.collider.GetComponentInParent<Tower>();
+                if (clickedTower != null)
+                {
+                    if (selectedTower != null && selectedTower != clickedTower)
+                    {
+                        selectedTower.ShowRange(false);
+                        selectedTower.ShowStatsUI(false);
+                    }
+
+                    selectedTower = clickedTower;
+                    selectedTower.ShowRange(true);
+                    selectedTower.ShowStatsUI(true);
+                }
+                else
+                {
+                    if (selectedTower != null)
+                    {
+                        selectedTower.ShowRange(false);
+                        selectedTower.ShowStatsUI(false);
+                        selectedTower = null;
+                    }
+                }
+            }
+        }
     }
 
     void ApplyGhostTransparency(GameObject obj)
     {
-        // Collect all renderers including SkinnedMeshRenderers
-        List<Renderer> allRenderers = new List<Renderer>();
+        var allRenderers = new List<Renderer>();
         allRenderers.AddRange(obj.GetComponentsInChildren<Renderer>(true));
         allRenderers.AddRange(obj.GetComponentsInChildren<SkinnedMeshRenderer>(true));
 
@@ -126,12 +162,12 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < mats.Length; i++)
             {
                 Material original = r.materials[i];
-                Material mat = new Material(Shader.Find("Standard")); // ensure transparency works
+                Material mat = new Material(Shader.Find("Standard"));
                 mat.CopyPropertiesFromMaterial(original);
 
-                mat.SetFloat("_Mode", 3); // Transparent
+                mat.SetFloat("_Mode", 3);
                 Color c = mat.color;
-                c.a = 0.5f; // ghost alpha
+                c.a = 0.5f;
                 mat.color = c;
 
                 mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);

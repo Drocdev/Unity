@@ -461,8 +461,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.73, y: 1.56, z: 2.74}
+  m_Center: {x: -0.15, y: -0.09, z: -1.39}
 --- !u!114 &4421672026581897205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,10 +475,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fbe54d4ba78154f84e9ad45f1dea86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 40
+  damage: 10
+  range: 35
   fireRate: 1
-  bulletPrefab: {fileID: 6841326079817175252, guid: 4fa40afdd614a484babc06e93be34cfe, type: 3}
-  firePoint: {fileID: 6313396079118893289}
+  firePoints:
+  - {fileID: 6313396079118893289}
+  bulletPrefabs:
+  - {fileID: 6841326079817175252, guid: 4fa40afdd614a484babc06e93be34cfe, type: 3}
+  singleTargetPerFirePoint: 0
+  castleTransform: {fileID: 0}
+  rangeIndicator: {fileID: 0}
+  rangeColor: {r: 1, g: 0.80134904, b: 0, a: 1}
+  rangeWidth: 2
+  statsUIPrefab: {fileID: 4909950874839941334, guid: 7fbafc6e824019a4398eb15acd76f577, type: 3}
+  statsOffset: {x: 0, y: 15, z: 5}
+  statsColor: {r: 0, g: 0.012152195, b: 1, a: 1}
+  statsFontSize: 30
+  statsWorldScale: 0.1
+  statsFont: {fileID: 0}
+  statsTMPFont: {fileID: 0}
+  rotationLerp: 1
 --- !u!1001 &5318644709197735440
 PrefabInstance:
   m_ObjectHideFlags: 0

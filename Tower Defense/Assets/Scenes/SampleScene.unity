@@ -1554,6 +1554,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Castle
       objectReference: {fileID: 0}
+    - target: {fileID: 5115041027191981394, guid: 977380f6120d5e7419b41dad03a1a08f, type: 3}
+      propertyPath: m_TagString
+      value: Base
+      objectReference: {fileID: 0}
     - target: {fileID: 8647512852048277261, guid: 977380f6120d5e7419b41dad03a1a08f, type: 3}
       propertyPath: m_Enabled
       value: 1
