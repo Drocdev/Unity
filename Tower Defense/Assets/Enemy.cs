@@ -6,12 +6,14 @@ public class Enemy : MonoBehaviour
     [Header("Movement")]
     public float speed = 5f;
     private float startSpeed;
-
     private Transform target;
     private int waypointIndex = 0;
 
     [Header("Health")]
     public int health = 3;
+
+    [Header("Rewards")]
+    public int goldReward = 5;
 
     [Header("Status Effects")]
     private bool isPoisoned = false;
@@ -20,7 +22,6 @@ public class Enemy : MonoBehaviour
     [Header("Visuals")]
     private Renderer[] renderers;
     private Color[] originalColors;
-
     public ParticleSystem poisonEffect;
 
     [Header("Damage Numbers")]
@@ -30,7 +31,6 @@ public class Enemy : MonoBehaviour
     public Vector3 normalDamageOffset = new Vector3(-0.2f, 3f, 0);
     public Vector3 poisonDamageOffset = new Vector3(0.2f, 3f, 0);
 
-    // Reference to current stacked normal damage number
     private DamageNumber activeWhiteNumber;
     private int accumulatedNormalDamage = 0;
 
@@ -38,13 +38,14 @@ public class Enemy : MonoBehaviour
     {
         startSpeed = speed;
         target = Waypoints.points[0];
-
         renderers = GetComponentsInChildren<Renderer>();
         originalColors = new Color[renderers.Length];
+
         for (int i = 0; i < renderers.Length; i++)
         {
-            originalColors[i] = renderers[i].material.HasProperty("_BaseColor") ?
-                renderers[i].material.GetColor("_BaseColor") : renderers[i].material.color;
+            originalColors[i] = renderers[i].material.HasProperty("_BaseColor")
+                ? renderers[i].material.GetColor("_BaseColor")
+                : renderers[i].material.color;
         }
     }
 
@@ -72,13 +73,18 @@ public class Enemy : MonoBehaviour
         waypointIndex++;
         if (waypointIndex >= Waypoints.points.Length)
         {
+            // DAMAGE THE BASE via GameManager
+            GameManager gm = FindObjectOfType<GameManager>();
+            if (gm != null)
+            {
+                gm.BaseTakeDamage(1);
+            }
+
             Destroy(gameObject);
             return;
         }
         target = Waypoints.points[waypointIndex];
     }
-
-    // ------------ DAMAGE ------------
 
     public void TakeDamage(int dmg, Color? dmgColor = null)
     {
@@ -89,7 +95,6 @@ public class Enemy : MonoBehaviour
         {
             if (!isPoisonDamage)
             {
-                // --- Handle stacked white number ---
                 if (activeWhiteNumber == null)
                 {
                     GameObject dmgText = Instantiate(damageNumberPrefab);
@@ -101,12 +106,11 @@ public class Enemy : MonoBehaviour
                 {
                     accumulatedNormalDamage += dmg;
                     activeWhiteNumber.UpdateDamage(accumulatedNormalDamage);
-                    activeWhiteNumber.ResetFadeTimer(); // prevent it from fading out too early
+                    activeWhiteNumber.ResetFadeTimer();
                 }
             }
             else
             {
-                // --- Spawn separate purple poison number ---
                 GameObject dmgText = Instantiate(damageNumberPrefab);
                 var dn = dmgText.GetComponent<DamageNumber>();
                 dn.Setup(dmg, transform, new Color(0.5f, 0f, 0.5f), poisonDamageOffset);
@@ -118,10 +122,13 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm != null)
+        {
+            gm.AddGold(goldReward);
+        }
         Destroy(gameObject);
     }
-
-    // ------------ STATUS EFFECTS ------------
 
     public void ApplySlow(float slowFactor, float duration)
     {
@@ -162,13 +169,12 @@ public class Enemy : MonoBehaviour
 
         float elapsed = 0f;
         float tickInterval = 1f;
+
         while (elapsed < duration)
         {
             yield return new WaitForSeconds(tickInterval);
-
             int tickDamage = Mathf.RoundToInt(dps * tickInterval);
             TakeDamage(tickDamage, new Color(0.5f, 0f, 0.5f));
-
             elapsed += tickInterval;
         }
 

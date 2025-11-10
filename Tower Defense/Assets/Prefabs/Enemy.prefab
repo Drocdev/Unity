@@ -123,8 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25fab4e0f6bc6814db1c01939c80d275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  health: 5
+  speed: 25
+  health: 50
+  goldReward: 5
   poisonEffect: {fileID: 3528708763759924953}
   damageNumberPrefab: {fileID: 2272204125733258317, guid: f4b0019560a362f4cb664ec22b6053bc, type: 3}
   normalDamageOffset: {x: 0, y: 4, z: 0}
