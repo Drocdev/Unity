@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,6 +47,15 @@ public class GameManager : MonoBehaviour
     public float gameOverDelay = 3f;
     private TextMeshProUGUI gameOverText;
 
+    [Header("Level Complete UI")]
+    public TMP_FontAsset levelCompleteFont;
+    public int levelCompleteFontSize = 48;
+    public Color levelCompleteColor = Color.green;
+    private TextMeshProUGUI levelCompleteText;
+
+    [Header("Level Settings")]
+    public string nextLevelSceneName;
+
     private GameObject ghostObject;
     private int selectedTowerIndex = 0;
     private bool ghostActive = false;
@@ -54,6 +64,9 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI goldText;
     private TextMeshProUGUI waveText;
     private int currentWave = 0;
+
+    [HideInInspector]
+    public bool isGameOver = false;
 
     void Start()
     {
@@ -67,6 +80,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (isGameOver) return;
+
         HandleTowerSelection();
         HandleTowerPlacement();
         HandleTowerClick();
@@ -150,6 +165,9 @@ public class GameManager : MonoBehaviour
             position + currentOffset,
             ghostObject.transform.rotation
         );
+
+        // Automatically assign Tower tag if missing
+        if (!placedTower.CompareTag("Tower")) placedTower.tag = "Tower";
 
         Tower towerComp = placedTower.GetComponent<Tower>();
         if (towerComp != null) towerComp.ShowRange(false);
@@ -328,7 +346,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Game Over
+    #region Game Over & Level Complete
     private void ShowGameOverUI()
     {
         if (goldCanvas == null) return;
@@ -353,14 +371,44 @@ public class GameManager : MonoBehaviour
         rt.sizeDelta = new Vector2(600, 200);
     }
 
+    private void ShowLevelCompleteUI()
+    {
+        if (goldCanvas == null) return;
+
+        if (levelCompleteText != null) Destroy(levelCompleteText.gameObject);
+
+        GameObject textGO = new GameObject("LevelCompleteText");
+        textGO.transform.SetParent(goldCanvas.transform, false);
+
+        levelCompleteText = textGO.AddComponent<TextMeshProUGUI>();
+        levelCompleteText.font = levelCompleteFont != null ? levelCompleteFont : TMP_Settings.defaultFontAsset;
+        levelCompleteText.fontSize = levelCompleteFontSize;
+        levelCompleteText.color = levelCompleteColor;
+        levelCompleteText.alignment = TextAlignmentOptions.Center;
+        levelCompleteText.text = "LEVEL COMPLETE!";
+
+        RectTransform rt = levelCompleteText.rectTransform;
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
+        rt.sizeDelta = new Vector2(600, 200);
+    }
+
     public void GameOver()
     {
         Debug.Log("Base destroyed! Game Over!");
+        isGameOver = true;
 
         StopAllCoroutines();
 
+        // Destroy all enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var e in enemies) Destroy(e);
+
+        // Destroy all towers
+        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
+        foreach (var t in towers) Destroy(t);
 
         ShowGameOverUI();
 
@@ -381,8 +429,39 @@ public class GameManager : MonoBehaviour
 
         UpdateWaveUI(1);
 
+        isGameOver = false;
+
+        // Reset waves
         EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
         if (spawner != null) spawner.ResetWaves();
+    }
+
+    public void LevelComplete()
+    {
+        Debug.Log("All waves complete! Level finished!");
+        isGameOver = true;
+
+        StopAllCoroutines();
+
+        // Destroy all enemies
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var e in enemies) Destroy(e);
+
+        ShowLevelCompleteUI();
+
+        StartCoroutine(LoadNextLevelAfterDelay());
+    }
+
+    private IEnumerator LoadNextLevelAfterDelay()
+    {
+        yield return new WaitForSeconds(gameOverDelay);
+
+        if (levelCompleteText != null) Destroy(levelCompleteText.gameObject);
+
+        if (!string.IsNullOrEmpty(nextLevelSceneName))
+        {
+            SceneManager.LoadScene(nextLevelSceneName);
+        }
     }
     #endregion
 }

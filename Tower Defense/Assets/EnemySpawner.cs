@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class EnemySpawner : MonoBehaviour
     public GameManager gameManager;
     public float timeBetweenWaves = 5f;
 
+    [Header("Level Settings")]
+    public string nextLevelSceneName; // Next scene after all waves
+
     private int currentWaveIndex = 0;
     private bool isSpawning = false;
 
@@ -51,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
         StopAllCoroutines();
         currentWaveIndex = 0;
 
+        // Destroy all existing enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var e in enemies)
             Destroy(e);
@@ -64,6 +69,11 @@ public class EnemySpawner : MonoBehaviour
 
         while (currentWaveIndex < waves.Count)
         {
+            if (gameManager != null && gameManager.isGameOver)
+            {
+                yield break; // Stop spawning if game is over
+            }
+
             Wave wave = waves[currentWaveIndex];
 
             if (gameManager != null)
@@ -80,6 +90,10 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Debug.Log("All waves complete!");
+
+        // Notify GameManager that level is complete
+        if (gameManager != null)
+            gameManager.LevelComplete();
     }
 
     IEnumerator SpawnWave(Wave wave)
@@ -88,6 +102,11 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (SubWave subWave in wave.subWaves)
         {
+            if (gameManager != null && gameManager.isGameOver)
+            {
+                yield break; // Stop spawning if game is over
+            }
+
             Debug.Log("Starting subwave: " + subWave.subWaveName);
 
             foreach (SubWaveEnemy subEnemy in subWave.enemies)
@@ -115,7 +134,12 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
 
-            yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
+            // Wait until all enemies are destroyed before next subwave
+            yield return new WaitUntil(() =>
+                GameObject.FindGameObjectsWithTag("Enemy").Length == 0 ||
+                (gameManager != null && gameManager.isGameOver)
+            );
+
             Debug.Log("Subwave complete: " + subWave.subWaveName);
         }
 
