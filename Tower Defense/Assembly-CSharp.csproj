@@ -94,6 +94,7 @@
     <Compile Include="Assets\EnemySpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\Piloto Studio\Readme\Scripts\ReadmeBehaviour.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\PointLight.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Piloto Studio\Readme\Scripts\Readme.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\LowPoly Fantasy Monsters Pack Ver1.0_Demo\Environment\Scripts\Move.cs" />
@@ -1063,6 +1065,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Abiogenesis3d.Shared.csproj">
+      <Project>{A31DDA11-267E-B9ED-68C8-AE4BA6DA6E38}</Project>
+      <Name>Abiogenesis3d.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="Campfire.csproj">
+      <Project>{B7894A66-FBAB-E37D-68B5-81FF5A2AC9A2}</Project>
+      <Name>Campfire</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
